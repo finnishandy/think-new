@@ -23,12 +23,19 @@ $( window ).scroll(function(e) {
     var ay = window.pageYOffset;
     var innerHeight = window.innerHeight;
     var fullHeight = document.documentElement.scrollHeight;
-    console.log("inner: " + innerHeight)
+    var mid = (innerHeight / 2);
+    console.log("inner: " + innerHeight);
+    console.log("mid: " + mid);
     console.log("full: " + fullHeight);
-    //console.log("pageY" + e.pageY);
+    console.log("pageY: " + window.pageYOffset);
     cards.forEach(function(card, idx) {
         console.log("card top: " + card.offsetTop);
-        console.log("card center: " + cardCenter[idx]);
+        console.log("card top / pageY: " + ((card.offsetTop - window.pageYOffset)));
+        console.log("card top distance from mid: " + ((card.offsetTop - window.pageYOffset) - mid));
+        //console.log("distance to mid" + Math.abs()
+        //var cardZ = (((card.offsetTop - window.pageYOffset) / (innerHeight / 2)));
+        var cardZ = ((card.offsetTop - window.pageYOffset) - mid) > 0 ? -((card.offsetTop - window.pageYOffset) - mid): ((card.offsetTop - window.pageYOffset) - mid);
+        console.log("card Z " +idx+": " + cardZ);
         if (idx === 1) {
             var scrollTop = card.scrollTop;
             console.log("scroll top: " + parseInt(document.body.scrollTop / fullHeight));
@@ -37,7 +44,7 @@ $( window ).scroll(function(e) {
         var cardPos = cardMid / innerHeight;
         //console.log("card" + idx + ": " + cardPos);
         console.log("supposed alignment: " + cardCenter[idx])
-        card.setAttribute("style", "transform: translateZ(-"+ay+"px); -webkit-transform: translateZ(-"+ay+"px); -moz-transform: translateZ(-"+ay+"px)");
+        card.setAttribute("style", "transform: translateZ("+cardZ+"px);");
     });
     //var ay = ($(window).innerHeight()/2- window.pageYOffset)/10;
 
